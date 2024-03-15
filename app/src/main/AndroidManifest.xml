@@ -27,5 +27,10 @@
             android:name=".MusicService"
             android:process=":another_process"
             android:exported="false" />
+
+        <service
+            android:name=".ProgressService"
+            android:exported="false" />
+
     </application>
 </manifest>

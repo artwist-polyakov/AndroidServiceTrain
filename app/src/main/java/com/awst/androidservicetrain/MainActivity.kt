@@ -23,6 +23,14 @@ class MainActivity : AppCompatActivity() {
             // Стартуем сервис
             startService(intent)
         }
+
+        findViewById<Button>(R.id.startProgressServiceButton).setOnClickListener {
+            // Создаём intent для запуска сервиса
+            val intent = Intent(this, ProgressService::class.java)
+            // Стартуем сервис
+            startService(intent)
+        }
+
     }
 
     private companion object {
