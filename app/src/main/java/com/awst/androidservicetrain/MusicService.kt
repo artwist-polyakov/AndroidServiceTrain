@@ -10,6 +10,31 @@ internal class MusicService : Service() {
 
     private var mediaPlayer: MediaPlayer? = null
 
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        Log.d(LOG_TAG, "onStartCommand | flags: $flags, startId: $startId")
+
+        val songUrl = intent?.getStringExtra("song_url")
+        if (songUrl != null) {
+            Log.d(LOG_TAG, "onStartCommand -> song url exists")
+
+            mediaPlayer?.setDataSource(songUrl)
+            mediaPlayer?.prepareAsync()
+
+            mediaPlayer?.setOnPreparedListener {
+                it?.start()
+            }
+
+            mediaPlayer?.setOnCompletionListener {
+                stopSelf()
+            }
+        }
+
+        Log.d(LOG_TAG, "onStartCommand -> before return")
+
+        return Service.START_NOT_STICKY
+    }
+
     /*
     Наследование от Service заставляет нас переопределить метод onBind.
     Поговорим о нём, когда будем реализовывать bound-сервис.
