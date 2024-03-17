@@ -47,7 +47,26 @@ internal class MusicService : Service() {
         super.onCreate()
 
         Log.d(LOG_TAG, "onCreate")
+        createNotificationChannel()
         mediaPlayer = MediaPlayer()
+    }
+
+    private fun createNotificationChannel() {
+        // Создание каналов доступно только с Android 8.0
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            return
+        }
+
+        val channel = NotificationChannel(
+            /* id= */ NOTIFICATION_CHANNEL_ID,
+            /* name= */ "Music service",
+            /* importance= */ NotificationManager.IMPORTANCE_DEFAULT
+        )
+        channel.description = "Service for playing music"
+
+        // Регистрируем канал уведомлений
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
     }
 
     // Освобождение ресурсов
