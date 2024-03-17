@@ -12,21 +12,34 @@ internal class ProgressService : Service() {
         const val LOG_TAG = "ProgressService"
     }
 
+
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
 
+    override fun onCreate() {
+        super.onCreate()
+        Log.d(LOG_TAG, "onCreate()")
+    }
+
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        // Запускает новый поток
+        Log.d(LOG_TAG, "onStartCommand | startId: $startId")
+
         Executors.newSingleThreadExecutor().execute {
             for (i in 0..<100) {
-                Log.d(LOG_TAG, "Progress: ${i}%")
-                Thread.sleep(2000)
+                Log.d(LOG_TAG, "Progress: ${i}% | startId: $startId")
+                // Изменили константу, чтобы прогресс менялся быстрее.
+                Thread.sleep(200)
             }
-            stopSelf()
+            stopSelf(startId)
         }
 
         return START_NOT_STICKY
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(LOG_TAG, "onDestroy")
     }
 
 }
