@@ -1,10 +1,16 @@
 package com.awst.androidservicetrain
 
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
+import android.os.Build
 import android.os.IBinder
 import android.util.Log
+import androidx.core.app.NotificationCompat
 
 internal class MusicService : Service() {
 
@@ -79,7 +85,19 @@ internal class MusicService : Service() {
         mediaPlayer = null
     }
 
+    private fun createServiceNotification(): Notification {
+        return NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+            .setContentTitle("Music foreground service")
+            .setContentText("Our service is working right now!")
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setCategory(NotificationCompat.CATEGORY_SERVICE)
+            .build()
+    }
+
+
     private companion object {
         const val LOG_TAG = "MusicService"
+        const val NOTIFICATION_CHANNEL_ID = "music_service_channel"
     }
 }
