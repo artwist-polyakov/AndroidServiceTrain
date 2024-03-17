@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             // Стартуем сервис
-            startService(intent)
+            ContextCompat.startForegroundService(this, intent)
         }
 
         findViewById<Button>(R.id.startProgressServiceButton).setOnClickListener {
