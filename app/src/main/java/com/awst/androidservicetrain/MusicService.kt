@@ -25,7 +25,7 @@ internal class MusicService : Service() {
         val songUrl = intent?.getStringExtra("song_url")
         if (songUrl != null) {
             Log.d(LOG_TAG, "onStartCommand -> song url exists")
-
+            mediaPlayer?.reset()
             mediaPlayer?.setDataSource(songUrl)
             mediaPlayer?.prepareAsync()
 
